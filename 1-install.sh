@@ -81,11 +81,11 @@ while true; do
    case $yn in
       [Yy]* )
          echo "Nvidia installation started."
-	      pacstrap -K /mnt base base-devel kmod git linux linux-firmware vim nvim openssh reflector rsync amd-ucode "${nvidia_packages[@]}"
+	      pacstrap -K /mnt base base-devel kmod git linux linux-firmware vim neovim openssh reflector rsync amd-ucode "${nvidia_packages[@]}"
       break;;
       [Nn]* ) 
          echo "Base Installation started."
-	      pacstrap -K /mnt base base-devel kmod git linux linux-firmware vim nvim openssh reflector rsync amd-ucode
+	      pacstrap -K /mnt base base-devel kmod git linux linux-firmware vim neovim openssh reflector rsync amd-ucode
       break;;
       * ) echo "Please answer yes or no.";;
    esac

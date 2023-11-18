@@ -50,7 +50,7 @@ pacman -Syy
 # Install Packages
 # ------------------------------------------------------
 packages=(
-	acpi
+   acpi
 	acpi_call
 	acpid
 	alsa-utils
