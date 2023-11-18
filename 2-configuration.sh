@@ -18,6 +18,13 @@ username="dakota"
 # Check for Nvidia GPU
 if lspci -k | grep -A 2 -E "(VGA|3D)" | grep -iq nvidia; then
 	ISNVIDIA=true
+   echo " _   _       _     _ _       "
+   echo "| \\ | |     (_)   | (_)      "
+   echo "|  \\| |_   ___  __| |_  __ _ "
+   echo "| . \` \\ \ / / |/ _\` | |/ _\` |"
+   echo "| |\  |\\ V /| | (_| | | (_| |"
+   echo "|_| \_| \_/ |_|\__,_|_|\__,_|"
+   echo ""
 else
 	ISNVIDIA=false
 fi
@@ -32,7 +39,7 @@ hwclock --systohc
 # Update reflector
 # ------------------------------------------------------
 echo "Start reflector..."
-reflector -c "United States," -p https -a 3 --sort rate --save /etc/pacman.d/mirrorlist
+reflector -c "United States," -p https -a 5 --sort rate --save /etc/pacman.d/mirrorlist
 
 # ------------------------------------------------------
 # Synchronize mirrors
@@ -115,7 +122,7 @@ packages=(
 
 grub_boot=(grub grub-btrfs terminus-font)
 
-pacman --noconfirm -S $packages $grub_boot
+pacman --noconfirm -S "${packages[@]}" "${grub_boot[@]}"
 
 # Stephan Raabe Version
 # pacman --noconfirm -S grub xdg-desktop-portal-wlr efibootmgr networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools base-devel linux-headers avahi xdg-user-dirs xdg-utils gvfs gvfs-smb nfs-utils inetutils dnsutils bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion openssh rsync reflector acpi acpi_call dnsmasq openbsd-netcat ipset firewalld flatpak sof-firmware nss-mdns acpid os-prober ntfs-3g terminus-font exa bat htop ranger zip unzip neofetch duf xorg xorg-xinit xclip grub-btrfs xf86-video-amdgpu xf86-video-nouveau xf86-video-intel xf86-video-qxl brightnessctl pacman-contrib inxi
@@ -138,6 +145,7 @@ echo "KEYMAP=$keyboardlayout" >>/etc/vconsole.conf
 # ------------------------------------------------------
 echo "$hostname" >>/etc/hostname
 echo "127.0.0.1 localhost" >>/etc/hosts
+# echo "127.0.0.1 localhost" | sudo tee -a /etc/hosts
 echo "::1       localhost" >>/etc/hosts
 echo "127.0.1.1 $hostname.localdomain $hostname" >>/etc/hosts
 clear
@@ -173,7 +181,7 @@ systemctl enable acpid
 # ------------------------------------------------------
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
 if [[ "$ISNVIDIA" ]]; then
-	sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"/' /etc/default/grub
+	sed -i 's|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"|' /etc/default/grub
 fi
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -196,7 +204,7 @@ echo "Uncomment %wheel group in sudoers (around line 85):"
 echo "Before: #%wheel ALL=(ALL:ALL) ALL"
 echo "After:  %wheel ALL=(ALL:ALL) ALL"
 echo ""
-read -p "Open sudoers now?" c
+read -p "Open sudoers now?"
 EDITOR=vim sudo -E visudo
 usermod -aG wheel $username
 

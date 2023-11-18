@@ -61,19 +61,19 @@ mount /dev/$sda1 /mnt/boot/efi
 # ------------------------------------------------------
 # Nvidia Option
 echo " _   _       _     _ _       "
-echo "| \ | |     (_)   | (_)      "
-echo "|  \| |_   ___  __| |_  __ _ "
-echo "| . ` \ \ / / |/ _` | |/ _` |"
-echo "| |\  |\ V /| | (_| | | (_| |"
+echo "| \\ | |     (_)   | (_)      "
+echo "|  \\| |_   ___  __| |_  __ _ "
+echo "| . \` \\ \ / / |/ _\` | |/ _\` |"
+echo "| |\  |\\ V /| | (_| | | (_| |"
 echo "|_| \_| \_/ |_|\__,_|_|\__,_|"
 echo ""
 
 nvidia_packages=(
-	linux-headers
-	nvidia-dkms
-	nvidia-settings
-	libva
-	libva-nvidia-driver
+   linux-headers
+   nvidia-dkms
+   nvidia-settings
+   libva
+   libva-nvidia-driver
 )
 
 while true; do
@@ -81,11 +81,11 @@ while true; do
    case $yn in
       [Yy]* )
          echo "Nvidia installation started."
-	      pacstrap -K /mnt base base-devel git linux linux-firmware vim nvim openssh reflector rsync amd-ucode $nvidia_packages
+	      pacstrap -K /mnt base base-devel kmod git linux linux-firmware vim nvim openssh reflector rsync amd-ucode "${nvidia_packages[@]}"
       break;;
       [Nn]* ) 
          echo "Base Installation started."
-	      pacstrap -K /mnt base base-devel git linux linux-firmware vim nvim openssh reflector rsync amd-ucode
+	      pacstrap -K /mnt base base-devel kmod git linux linux-firmware vim nvim openssh reflector rsync amd-ucode
       break;;
       * ) echo "Please answer yes or no.";;
    esac
